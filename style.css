@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+}
+
+.calculator {
+  width: 400px;
+  padding: 20px;
+  border: 2px solid black;
+  border-radius: 20px;
+  background-color: #aaa;
+}
+
+.display {
+  min-height: 100px;
+  background-color: #eee;
+  padding: 20px;
+  text-align: right;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%;
+}
+
+.main > button {
+  width: 23.5%;
+}
