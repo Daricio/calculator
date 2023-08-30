@@ -53,6 +53,7 @@ const display = document.getElementById('display');
 const numberButtons = Array.from(document.getElementsByClassName('number'));
 const operatorButtons = Array.from(document.getElementsByClassName('operator'));
 const equalsButton = document.getElementById('equals-btn');
+const clearButton = document.getElementById('clear-btn');
 
 numberButtons.forEach(numberButton => {
   numberButton.addEventListener('click', () => {
@@ -67,6 +68,7 @@ operatorButtons.forEach(operatorButton => {
   operatorButton.addEventListener('click', () => {
     switch (mode) {
       case WAIT_NUM1:
+      case IDLE:
         number1 = +displayValue;
         displayValue = '';
         operator = operatorButton.getAttribute('data-operator');
@@ -87,14 +89,14 @@ operatorButtons.forEach(operatorButton => {
         }
         break;
 
-      case IDLE:
-        number1 = +displayValue;
-        displayValue = '';
-        operator = operatorButton.getAttribute('data-operator');
-        mode = WAIT_NUM2;
-        break;
+      // case IDLE:
+      //   number1 = +displayValue;
+      //   displayValue = '';
+      //   operator = operatorButton.getAttribute('data-operator');
+      //   mode = WAIT_NUM2;
+      //   break;
 
-      default:
+        default:
     }
   })
 })
@@ -107,6 +109,12 @@ equalsButton.addEventListener('click', () => {
     display.textContent = displayValue;
     mode = IDLE;
   }
+})
+
+clearButton.addEventListener('click', () => {
+  displayValue = '0';
+  display.textContent = displayValue;
+  mode = WAIT_NUM1;
 })
 
 // we either wait for number1 or number2 or show result
