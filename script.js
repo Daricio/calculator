@@ -1,8 +1,8 @@
 const operatorSigns = {
   '+': '+',
-  '-': '&minus;',
-  '*': '&#215;',
-  '/': '&#247;',
+  '-': '\u2212',
+  '*': '\u00D7',
+  '/': '\u00F7',
 };
 
 function add(a, b) {
@@ -191,7 +191,7 @@ function updateDisplay() {
 
 function updateOperationInfo() {
   currentNumber1Span.textContent = (number1 !== null && number1 !== undefined) ? number1 : '';
-  currentOperatorSpan.textContent = (operator) ? operator : '';
+  currentOperatorSpan.textContent = (operator) ? operatorSigns[operator] : '';
   currentNumber2Span.textContent = (number2 !== null && number2 !== undefined) ? number2 : '';
   equalsSpan.textContent = (result !== null && result !== undefined) ? '=' : '';
 }
