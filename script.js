@@ -88,6 +88,10 @@ operatorButtons.forEach(operatorButton => {
         break;
 
       case IDLE:
+        number1 = +displayValue;
+        displayValue = '';
+        operator = operatorButton.getAttribute('data-operator');
+        mode = WAIT_NUM2;
         break;
 
       default:
