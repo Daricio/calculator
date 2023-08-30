@@ -53,6 +53,10 @@ function operate(n1, n2, operator) {
 
     default:
   }
+
+  if (getDecimalLength(result.toString()) > 3) {
+    result = +(result.toFixed(3));
+  }
 }
 
 function getDecimalLength(numStr) {
