@@ -1,3 +1,10 @@
+const operatorSigns = {
+  '+': '+',
+  '-': '&minus;',
+  '*': '&#215;',
+  '/': '&#247;',
+};
+
 function add(a, b) {
   return a + b;
 }
@@ -83,6 +90,7 @@ const operatorButtons = Array.from(document.getElementsByClassName('operator'));
 const equalsButton = document.getElementById('equals-btn');
 
 const clearButton = document.getElementById('clear-btn');
+const deleteButton = document.getElementById('delete-btn');
 
 numberButtons.forEach(numberButton => {
   numberButton.addEventListener('click', () => {
@@ -95,11 +103,6 @@ numberButtons.forEach(numberButton => {
 })
 
 // point: if displayValue = '', add '0.'
-// TODO:
-// - max number restriction
-// - how display works: replace 0 with new number when waitNum1, clear display when choose operator,
-// show num1 and operator when waitNum2
-// - delete button
 pointButton.addEventListener('click', () => {
   if (displayValue === '') {
     displayValue += '0';
@@ -152,7 +155,7 @@ equalsButton.addEventListener('click', () => {
   if (mode == WAIT_NUM2 && displayValue !== '') {
     number2 = +displayValue;
     operate(number1, number2, operator);
-    displayValue = result;
+    displayValue = result.toString();
     updateOperationInfo();
     updateDisplay();
     
@@ -175,16 +178,28 @@ clearButton.addEventListener('click', () => {
   mode = WAIT_NUM1;
 })
 
+deleteButton.addEventListener('click', () => {
+  if (displayValue) {
+    displayValue = displayValue.slice(0, -1);
+  }
+  updateDisplay();
+})
+
 function updateDisplay() {
   display.textContent = displayValue;
 }
 
 function updateOperationInfo() {
-  currentNumber1Span.textContent = (number1) ? number1 : '';
+  currentNumber1Span.textContent = (number1 !== null && number1 !== undefined) ? number1 : '';
   currentOperatorSpan.textContent = (operator) ? operator : '';
-  currentNumber2Span.textContent = (number2) ? number2 : '';
-  equalsSpan.textContent = (result) ? '=' : '';
+  currentNumber2Span.textContent = (number2 !== null && number2 !== undefined) ? number2 : '';
+  equalsSpan.textContent = (result !== null && result !== undefined) ? '=' : '';
 }
+
+
+// TODO:
+// - max number restriction
+// - delete button
 
 
 // we either wait for number1 or number2 or show result
