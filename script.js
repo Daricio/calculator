@@ -27,22 +27,24 @@ function operate(n1, n2, operator) {
   // (a*x * b*x)/x*x = a * b
   // a - b = (a*x - b*x)/x
   // a / b = a*x / b*x
-  const n1Str = n1.toString();
-  const n2Str = n2.toString();
-  const decimalLength1 = (n1Str.includes('.')) ? n1Str.slice(n1Str.indexOf('.')+1).length : 0;
-  const decimalLength2 = (n2Str.includes('.')) ? n2Str.slice(n2Str.indexOf('.')+1).length : 0;
-  const maxDecimalLength = 0; //TODO
+  const decimalLength1 = getDecimalLength(n1.toString());
+  const decimalLength2 = getDecimalLength(n2.toString());
+  const maxDecimalLength = Math.max(decimalLength1, decimalLength2);
+  let multiplier = Math.pow(10, maxDecimalLength); // 1, if max = 0
+  n1 *= multiplier;
+  n2 *= multiplier;
+
   switch (operator) {
     case '+':
-      result = add(n1, n2);
+      result = add(n1, n2) / multiplier;
       break;
 
     case '-':
-      result = subtract(n1, n2);
+      result = subtract(n1, n2) / multiplier;
       break;
 
     case '*':
-      result = multiply(n1, n2);
+      result = multiply(n1, n2) / multiplier**2;
       break;
 
     case '/':
