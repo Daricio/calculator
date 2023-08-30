@@ -63,7 +63,7 @@ let displayValue = '0';
 
 const WAIT_NUM1 = 'waitNum1';
 const WAIT_NUM2 = 'waitNum2';
-const IDLE = 'idle';
+// const IDLE = 'idle';
 
 let mode = WAIT_NUM1;
 
@@ -82,9 +82,8 @@ numberButtons.forEach(numberButton => {
 })
 
 // point: if displayValue = '', add '0.'
-// TODO: - fix operations result inaccuracy with double args
-// - deprecate IDLE
-// - max number restriction
+// TODO:
+// - max number restriction, result with fixed 3 decimal places
 // - how display works
 // - delete button
 pointButton.addEventListener('click', () => {
@@ -103,7 +102,6 @@ operatorButtons.forEach(operatorButton => {
   operatorButton.addEventListener('click', () => {
     switch (mode) {
       case WAIT_NUM1:
-      case IDLE:
         number1 = +displayValue;
         displayValue = '';
         operator = operatorButton.getAttribute('data-operator');
@@ -142,7 +140,7 @@ equalsButton.addEventListener('click', () => {
     operate(number1, number2, operator);
     displayValue = result;
     display.textContent = displayValue;
-    mode = IDLE;
+    mode = WAIT_NUM1;
   }
 })
 
