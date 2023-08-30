@@ -10,7 +10,7 @@
   background-color: #aaa;
 }
 
-.display {
+.screen {
   min-height: 100px;
   background-color: #eee;
   padding: 20px;
@@ -25,4 +25,8 @@
 
 .main > button {
   width: 23.5%;
+}
+
+.display {
+  min-height: 50px;
 }

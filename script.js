@@ -72,23 +72,33 @@ const WAIT_NUM2 = 'waitNum2';
 let mode = WAIT_NUM1;
 
 const display = document.getElementById('display');
+const currentNumber1Span = document.getElementById('current-number1-span');
+const currentOperatorSpan = document.getElementById('current-operator-span');
+const currentNumber2Span = document.getElementById('current-number2-span');
+const equalsSpan = document.getElementById('equals-span');
+
 const numberButtons = Array.from(document.getElementsByClassName('number'));
 const pointButton = document.getElementById('point-btn');
 const operatorButtons = Array.from(document.getElementsByClassName('operator'));
 const equalsButton = document.getElementById('equals-btn');
+
 const clearButton = document.getElementById('clear-btn');
 
 numberButtons.forEach(numberButton => {
   numberButton.addEventListener('click', () => {
+    if (displayValue === '0') {
+      displayValue = '';
+    }
     displayValue += `${numberButton.getAttribute('data-number')}`;
-    display.textContent = displayValue;
+    updateDisplay();
   })
 })
 
 // point: if displayValue = '', add '0.'
 // TODO:
-// - max number restriction, result with fixed 3 decimal places
-// - how display works
+// - max number restriction
+// - how display works: replace 0 with new number when waitNum1, clear display when choose operator,
+// show num1 and operator when waitNum2
 // - delete button
 pointButton.addEventListener('click', () => {
   if (displayValue === '') {
@@ -98,7 +108,7 @@ pointButton.addEventListener('click', () => {
     displayValue += '.';
   }
   
-  display.textContent = displayValue;
+  updateDisplay();
 })
 
 
@@ -107,33 +117,33 @@ operatorButtons.forEach(operatorButton => {
     switch (mode) {
       case WAIT_NUM1:
         number1 = +displayValue;
-        displayValue = '';
         operator = operatorButton.getAttribute('data-operator');
+        updateOperationInfo();
+        displayValue = '';
+        updateDisplay();
         mode = WAIT_NUM2;
         break;
 
       case WAIT_NUM2:
         if (displayValue === '') {
           operator = operatorButton.getAttribute('data-operator');
+          updateOperationInfo();
         }
         else {
           number2 = +displayValue;
           operate(number1, number2, operator);
+
           number1 = result;
           number2 = null;
-          displayValue = '';
           operator = operatorButton.getAttribute('data-operator');
+          result = null;
+          updateOperationInfo();
+          displayValue = '';
+          updateDisplay();
         }
         break;
 
-      // case IDLE:
-      //   number1 = +displayValue;
-      //   displayValue = '';
-      //   operator = operatorButton.getAttribute('data-operator');
-      //   mode = WAIT_NUM2;
-      //   break;
-
-        default:
+      default:
     }
   })
 })
@@ -143,16 +153,38 @@ equalsButton.addEventListener('click', () => {
     number2 = +displayValue;
     operate(number1, number2, operator);
     displayValue = result;
-    display.textContent = displayValue;
+    updateOperationInfo();
+    updateDisplay();
+    
+    number1 = null;
+    number2 = null;
+    operator = null;
+    result = null;
     mode = WAIT_NUM1;
   }
 })
 
 clearButton.addEventListener('click', () => {
+  number1 = null;
+  number2 = null;
+  operator = null;
+  // result is null in any case
+  updateOperationInfo();
   displayValue = '0';
-  display.textContent = displayValue;
+  updateDisplay();
   mode = WAIT_NUM1;
 })
+
+function updateDisplay() {
+  display.textContent = displayValue;
+}
+
+function updateOperationInfo() {
+  currentNumber1Span.textContent = (number1) ? number1 : '';
+  currentOperatorSpan.textContent = (operator) ? operator : '';
+  currentNumber2Span.textContent = (number2) ? number2 : '';
+  equalsSpan.textContent = (result) ? '=' : '';
+}
 
 
 // we either wait for number1 or number2 or show result
