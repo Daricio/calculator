@@ -55,13 +55,18 @@ function operate(n1, n2, operator) {
       break;
 
     case '/':
-      result = divide(n1, n2);
+      if (n2 === 0) {
+        alert('You cannot divide by zero!');
+      }
+      else {
+        result = divide(n1, n2);
+      }
       break;
 
     default:
   }
 
-  if (getDecimalLength(result.toString()) > 3) {
+  if (result && getDecimalLength(result.toString()) > 3) {
     result = +(result.toFixed(3));
   }
 }
@@ -135,12 +140,16 @@ operatorButtons.forEach(operatorButton => {
         else {
           number2 = +displayValue;
           operate(number1, number2, operator);
-
-          number1 = result;
+          if (result !== null && result !== undefined) {
+            number1 = result;
+            // number2 = null;
+            operator = operatorButton.getAttribute('data-operator');
+            result = null;
+            updateOperationInfo();
+            // displayValue = '';
+            // updateDisplay();
+          }
           number2 = null;
-          operator = operatorButton.getAttribute('data-operator');
-          result = null;
-          updateOperationInfo();
           displayValue = '';
           updateDisplay();
         }
@@ -155,15 +164,22 @@ equalsButton.addEventListener('click', () => {
   if (mode == WAIT_NUM2 && displayValue !== '') {
     number2 = +displayValue;
     operate(number1, number2, operator);
-    displayValue = result.toString();
-    updateOperationInfo();
-    updateDisplay();
-    
-    number1 = null;
-    number2 = null;
-    operator = null;
-    result = null;
-    mode = WAIT_NUM1;
+    if (result !== null && result !== undefined) {
+      displayValue = result.toString();
+      updateOperationInfo();
+      updateDisplay();
+      
+      number1 = null;
+      number2 = null;
+      operator = null;
+      result = null;
+      mode = WAIT_NUM1;
+    }
+    else {
+      number2 = null;
+      displayValue = '';
+      updateDisplay();
+    }
   }
 })
 
@@ -198,8 +214,7 @@ function updateOperationInfo() {
 
 
 // TODO:
-// - max number restriction
-// - delete button
+// - keyboard support
 
 
 // we either wait for number1 or number2 or show result
