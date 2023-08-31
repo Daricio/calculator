@@ -99,16 +99,27 @@ const deleteButton = document.getElementById('delete-btn');
 
 numberButtons.forEach(numberButton => {
   numberButton.addEventListener('click', () => {
-    if (displayValue === '0') {
-      displayValue = '';
-    }
-    displayValue += `${numberButton.getAttribute('data-number')}`;
-    updateDisplay();
-  })
+    addNumberToDisplay(numberButton.getAttribute('data-number'));
+    // if (displayValue === '0') {
+    //   displayValue = '';
+    // }
+    // displayValue += `${numberButton.getAttribute('data-number')}`;
+    // updateDisplay();
+  });
 })
 
+function addNumberToDisplay(number) {
+  if (displayValue === '0') {
+    displayValue = '';
+  }
+  displayValue += `${number}`;
+  updateDisplay();
+}
+
 // point: if displayValue = '', add '0.'
-pointButton.addEventListener('click', () => {
+pointButton.addEventListener('click', addPointToDisplay);
+
+function addPointToDisplay() {
   if (displayValue === '') {
     displayValue += '0';
   }
@@ -117,50 +128,58 @@ pointButton.addEventListener('click', () => {
   }
   
   updateDisplay();
-})
+}
 
 
 operatorButtons.forEach(operatorButton => {
   operatorButton.addEventListener('click', () => {
-    switch (mode) {
-      case WAIT_NUM1:
-        number1 = +displayValue;
-        operator = operatorButton.getAttribute('data-operator');
-        updateOperationInfo();
-        displayValue = '';
-        updateDisplay();
-        mode = WAIT_NUM2;
-        break;
+    handleOperator(operatorButton.getAttribute('data-operator'));
+  });
+})
 
-      case WAIT_NUM2:
-        if (displayValue === '') {
-          operator = operatorButton.getAttribute('data-operator');
+function handleOperator(operatorKey) {
+  switch (mode) {
+    case WAIT_NUM1:
+      number1 = +displayValue;
+      operator = operatorKey;
+      updateOperationInfo();
+      displayValue = '';
+      updateDisplay();
+      mode = WAIT_NUM2;
+      break;
+
+    case WAIT_NUM2:
+      if (displayValue === '') {
+        operator = operatorKey;
+        updateOperationInfo();
+      }
+      else {
+        number2 = +displayValue;
+        operate(number1, number2, operator);
+        if (result !== null && result !== undefined) {
+          number1 = result;
+          number2 = null;
+          operator = operatorKey;
+          result = null;
           updateOperationInfo();
+          displayValue = '';
+          updateDisplay();
         }
         else {
-          number2 = +displayValue;
-          operate(number1, number2, operator);
-          if (result !== null && result !== undefined) {
-            number1 = result;
-            // number2 = null;
-            operator = operatorButton.getAttribute('data-operator');
-            result = null;
-            updateOperationInfo();
-            // displayValue = '';
-            // updateDisplay();
-          }
           number2 = null;
           displayValue = '';
           updateDisplay();
         }
-        break;
+      }
+      break;
 
-      default:
-    }
-  })
-})
+    default:
+  }
+}
 
-equalsButton.addEventListener('click', () => {
+equalsButton.addEventListener('click', handleEquals);
+
+function handleEquals() {
   if (mode == WAIT_NUM2 && displayValue !== '') {
     number2 = +displayValue;
     operate(number1, number2, operator);
@@ -181,7 +200,7 @@ equalsButton.addEventListener('click', () => {
       updateDisplay();
     }
   }
-})
+}
 
 clearButton.addEventListener('click', () => {
   number1 = null;
@@ -192,14 +211,16 @@ clearButton.addEventListener('click', () => {
   displayValue = '0';
   updateDisplay();
   mode = WAIT_NUM1;
-})
+});
 
-deleteButton.addEventListener('click', () => {
+deleteButton.addEventListener('click', deleteLastSymbol);
+
+function deleteLastSymbol() {
   if (displayValue) {
     displayValue = displayValue.slice(0, -1);
   }
   updateDisplay();
-})
+}
 
 function updateDisplay() {
   display.textContent = displayValue;
@@ -213,8 +234,47 @@ function updateOperationInfo() {
 }
 
 
+window.addEventListener('keydown', e => {
+  const key = e.key;
+  switch (key) {
+    case '0':
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+    case '9':
+      addNumberToDisplay(key);
+      break;
+
+    case '.':
+      addPointToDisplay();
+      break;
+
+    case '/':
+    case '*':
+    case '-':
+    case '+':
+      handleOperator(key);
+      break;
+
+    case '=':
+      handleEquals();
+      break;
+
+    case 'Backspace':
+      deleteLastSymbol();
+      break;
+
+    default:
+  }
+});
+
 // TODO:
-// - keyboard support
+// - remove default button lighting
 
 
 // we either wait for number1 or number2 or show result
