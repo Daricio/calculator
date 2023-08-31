@@ -100,11 +100,6 @@ const deleteButton = document.getElementById('delete-btn');
 numberButtons.forEach(numberButton => {
   numberButton.addEventListener('click', () => {
     addNumberToDisplay(numberButton.getAttribute('data-number'));
-    // if (displayValue === '0') {
-    //   displayValue = '';
-    // }
-    // displayValue += `${numberButton.getAttribute('data-number')}`;
-    // updateDisplay();
   });
 })
 
@@ -274,7 +269,6 @@ window.addEventListener('keydown', e => {
 });
 
 // TODO:
-// - remove default button lighting
 
 
 // we either wait for number1 or number2 or show result
