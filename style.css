@@ -1,32 +1,119 @@
+:root {
+  --background: #f6f6f6;
+  --font: #222;
+  --border: #333;
+  --screen: #eee;
+  --calculator: #aaa;
+  --btn: #eee;
+  --btn-hover: #ddd;
+  --btn-active: #ccc;
+  --btn-red: #faa;
+  --btn-red-hover: #e99;
+  --btn-red-active: #d88;
+  --btn-blue: #aaf;
+  --btn-blue-hover: #99e;
+  --btn-blue-active: #88d;
+}
+
 * {
   box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  color: var(--font);
+  line-height: 1.6;
+  background-color: var(--background);
 }
 
 .calculator {
   width: 400px;
   padding: 20px;
-  border: 2px solid black;
-  border-radius: 20px;
-  background-color: #aaa;
+  margin-top: 75px;
+  border: 2px solid var(--border);
+  border-radius: 15px;
+  background-color: var(--calculator);
 }
 
 .screen {
-  min-height: 100px;
-  background-color: #eee;
-  padding: 20px;
+  background-color: var(--screen);
+  padding: 10px 20px;
+  margin-bottom: 20px;
   text-align: right;
+  word-wrap: break-word;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+}
+
+.btn {
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.assistive {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.assistive > .btn {
+  flex: 1;
+}
+
+.btn.clear {
+  background-color: var(--btn-red);
+}
+
+.btn.clear:hover {
+  background-color: var(--btn-red-hover);
+}
+
+.btn.clear:active {
+  background-color: var(--btn-red-active);
+}
+
+.btn.delete {
+  background-color: var(--btn-blue);
+}
+
+.btn.delete:hover {
+  background-color: var(--btn-blue-hover);
+}
+
+.btn.delete:active {
+  background-color: var(--btn-blue-active);
 }
 
 .main {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
-.main > button {
-  width: 23.5%;
+.main > .btn {
+  background-color: var(--btn);
+}
+
+.main > .btn:hover {
+  background-color: var(--btn-hover);
+}
+
+.main > .btn:active {
+  background-color: var(--btn-active);
+}
+
+.operation-info {
+  font-size: 20px;
+  min-height: 32px;
 }
 
 .display {
-  min-height: 50px;
+  font-size: 40px;
+  min-height: 64px;
 }

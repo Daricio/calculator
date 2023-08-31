@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <script src="./script.js" defer></script>
   </head>
   <body>
     <div class="calculator">
       <div class="screen">
-        <div class="display info" id="operation-info">
+        <div class="operation-info" id="operation-info">
           <span id="current-number1-span"></span>
           <span id="current-operator-span"></span>
           <span id="current-number2-span"></span>
@@ -19,26 +23,26 @@
         <div class="display" id="display">0</div>
       </div>
       <div class="assistive">
-        <button class="clear" id="clear-btn">clear</button>
-        <button class="delete" id="delete-btn">delete</button>
+        <button class="btn clear" id="clear-btn">clear</button>
+        <button class="btn delete" id="delete-btn">delete</button>
       </div>
       <div class="main">
-        <button class="number" data-number="7">7</button>
-        <button class="number" data-number="8">8</button>
-        <button class="number" data-number="9">9</button>
-        <button class="operator" data-operator="/">&divide;</button>
-        <button class="number" data-number="4">4</button>
-        <button class="number" data-number="5">5</button>
-        <button class="number" data-number="6">6</button>
-        <button class="operator" data-operator="*">&times;</button>
-        <button class="number" data-number="1">1</button>
-        <button class="number" data-number="2">2</button>
-        <button class="number" data-number="3">3</button>
-        <button class="operator" data-operator="-">&minus;</button>
-        <button id="point-btn">.</button>
-        <button class="number" data-number="0">0</button>
-        <button id="equals-btn">=</button>
-        <button class="operator" data-operator="+">+</button>
+        <button class="btn number" data-number="7">7</button>
+        <button class="btn number" data-number="8">8</button>
+        <button class="btn number" data-number="9">9</button>
+        <button class="btn operator" data-operator="/">&divide;</button>
+        <button class="btn number" data-number="4">4</button>
+        <button class="btn number" data-number="5">5</button>
+        <button class="btn number" data-number="6">6</button>
+        <button class="btn operator" data-operator="*">&times;</button>
+        <button class="btn number" data-number="1">1</button>
+        <button class="btn number" data-number="2">2</button>
+        <button class="btn number" data-number="3">3</button>
+        <button class="btn operator" data-operator="-">&minus;</button>
+        <button class="btn" id="point-btn">.</button>
+        <button class="btn number" data-number="0">0</button>
+        <button class="btn" id="equals-btn">=</button>
+        <button class="btn operator" data-operator="+">+</button>
       </div>
     </div>
   </body>
