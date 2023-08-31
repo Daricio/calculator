@@ -62,7 +62,7 @@ body {
   margin-bottom: 10px;
 }
 
-.assistive > .btn {
+.assistive> .btn {
   flex: 1;
 }
 
@@ -96,15 +96,15 @@ body {
   gap: 10px;
 }
 
-.main > .btn {
+.main> .btn {
   background-color: var(--btn);
 }
 
-.main > .btn:hover {
+.main> .btn:hover {
   background-color: var(--btn-hover);
 }
 
-.main > .btn:active {
+.main> .btn:active {
   background-color: var(--btn-active);
 }
 

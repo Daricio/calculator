@@ -66,7 +66,7 @@ function operate(n1, n2, operator) {
     default:
   }
 
-  if (result && getDecimalLength(result.toString()) > 3) {
+  if (result && getDecimalLength(result.toString())> 3) {
     result = +(result.toFixed(3));
   }
 }
@@ -267,6 +267,13 @@ window.addEventListener('keydown', e => {
     default:
   }
 });
+
+const buttons = Array.from(document.getElementsByTagName('button'));
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    button.blur();
+  });
+})
 
 // TODO:
 
